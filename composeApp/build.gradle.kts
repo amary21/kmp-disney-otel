@@ -39,6 +39,22 @@ kotlin {
             baseName = "composeApp"
             isStatic = true
         }
+
+        pod("OpenTelemetry-Swift-Sdk") {
+            source = git("https://github.com/open-telemetry/opentelemetry-swift") {
+                tag = "1.11.0"
+            }
+            extraOpts += listOf("-compiler-option", "-fmodules")
+            moduleName = "OpenTelemetrySdk"
+        }
+
+        pod("OpenTelemetry-Swift-Api") {
+            source = git("https://github.com/open-telemetry/opentelemetry-swift") {
+                tag = "1.11.0"
+            }
+            extraOpts += listOf("-compiler-option", "-fmodules")
+            moduleName = "OpenTelemetryApi"
+        }
     }
 
     sourceSets {

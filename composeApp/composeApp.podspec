@@ -9,7 +9,8 @@ Pod::Spec.new do |spec|
     spec.vendored_frameworks      = 'build/cocoapods/framework/composeApp.framework'
     spec.libraries                = 'c++'
     spec.ios.deployment_target    = '15.3'
-                
+    spec.dependency 'OpenTelemetry-Swift-Api'
+    spec.dependency 'OpenTelemetry-Swift-Sdk'
                 
     if !Dir.exist?('build/cocoapods/framework/composeApp.framework') || Dir.empty?('build/cocoapods/framework/composeApp.framework')
         raise "
