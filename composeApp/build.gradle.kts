@@ -4,6 +4,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.kotlinserialization)
+    alias(libs.plugins.kotlinCocoapods)
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
@@ -28,12 +29,23 @@ kotlin {
         }
     }
 
-    sourceSets {
+    cocoapods {
+        homepage = "Disney Character App"
+        summary = "Demo of OpenTelemetry on Kotlin Multiplatform with Grafana, using https://disneyapi.dev for distributed tracing and metrics."
+        version = "1.0"
 
+        framework {
+            baseName = "composeApp"
+            isStatic = true
+        }
+    }
+
+    sourceSets {
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.ktor.client.okhttp)
+            implementation(libs.android.agent)
         }
 
         iosMain.dependencies {
@@ -98,4 +110,3 @@ android {
 dependencies {
     debugImplementation(compose.uiTooling)
 }
-
