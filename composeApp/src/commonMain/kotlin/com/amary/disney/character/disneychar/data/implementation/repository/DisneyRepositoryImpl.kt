@@ -13,7 +13,7 @@ internal class DisneyRepositoryImpl(
 ): DisneyRepository {
     override suspend fun getCharacters(): List<Character> {
         return withContext(ioDispatcher) {
-            disneyApi.getCharacters().map { it.toCharacter() }
+            disneyApi.getCharacters().data?.map { it.toCharacter() } ?: emptyList()
         }
     }
 }
