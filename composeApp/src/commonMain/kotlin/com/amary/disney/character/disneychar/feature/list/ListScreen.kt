@@ -27,6 +27,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import coil3.compose.AsyncImage
 import com.amary.disney.character.disneychar.data.api.model.Character
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -41,11 +42,11 @@ fun ListScreen(
                 title = { 
                     Text(
                         text = "Disney Characters",
-                        color = Color.White
+                        color = Color.Black
                     ) 
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color.Black
+                    containerColor = Color.White
                 )
             )
         }
@@ -92,10 +93,10 @@ fun CharacterItem(character: Character) {
                     .background(Color.LightGray),
                 contentAlignment = Alignment.Center
             ) {
-                Text(
-                    text = character.name.firstOrNull()?.toString() ?: "?",
-                    style = MaterialTheme.typography.headlineLarge,
-                    color = Color.DarkGray
+                AsyncImage(
+                    modifier = Modifier.fillMaxSize(),
+                    model = character.imageUrl,
+                    contentDescription = null,
                 )
             }
 
