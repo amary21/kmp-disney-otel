@@ -33,6 +33,7 @@ kotlin {
         homepage = "Disney Character App"
         summary = "Demo of OpenTelemetry on Kotlin Multiplatform with Grafana, using https://disneyapi.dev for distributed tracing and metrics."
         version = "1.0"
+        ios.deploymentTarget = "15.3"
 
         framework {
             baseName = "composeApp"
@@ -76,6 +77,12 @@ kotlin {
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
+        }
+
+        all {
+            languageSettings {
+                optIn("kotlinx.cinterop.ExperimentalForeignApi")
+            }
         }
     }
 }

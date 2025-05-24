@@ -8,7 +8,7 @@ Pod::Spec.new do |spec|
     spec.summary                  = 'Demo of OpenTelemetry on Kotlin Multiplatform with Grafana, using https://disneyapi.dev for distributed tracing and metrics.'
     spec.vendored_frameworks      = 'build/cocoapods/framework/composeApp.framework'
     spec.libraries                = 'c++'
-                
+    spec.ios.deployment_target    = '15.3'
                 
                 
     if !Dir.exist?('build/cocoapods/framework/composeApp.framework') || Dir.empty?('build/cocoapods/framework/composeApp.framework')
