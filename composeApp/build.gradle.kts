@@ -43,18 +43,21 @@ kotlin {
             isStatic = true
         }
 
-        pod("PhoneNumberKit") {
-            version = "4.0.1"
+        pod("OpenTelemetry-Swift-Sdk") {
+            moduleName = "OpenTelemetrySdk"
             extraOpts += listOf("-compiler-option", "-fmodules")
         }
 
-        pod("libPhoneNumber-iOS") {
-            version = "1.2.0"
+        pod("OpenTelemetry-Swift-Api") {
+            moduleName = "OpenTelemetryApi"
             extraOpts += listOf("-compiler-option", "-fmodules")
         }
-
-        pod("FormatterKit") {
-            version = "1.9.0"
+        pod("OpenTelemetry-Swift-Protocol-Exporter-Http") {
+            moduleName = "OpenTelemetryProtocolExporterHttp"
+            extraOpts += listOf("-compiler-option", "-fmodules")
+        }
+        pod("OpenTelemetry-Swift-StdoutExporter") {
+            moduleName = "StdoutExporter"
             extraOpts += listOf("-compiler-option", "-fmodules")
         }
     }
