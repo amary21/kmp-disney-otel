@@ -1,19 +1,47 @@
-This is a Kotlin Multiplatform project targeting Android, iOS.
+# Disney Character App
 
-* `/composeApp` is for code that will be shared across your Compose Multiplatform applications.
-  It contains several subfolders:
-  - `commonMain` is for code that’s common for all targets.
-  - Other folders are for Kotlin code that will be compiled for only the platform indicated in the folder name.
-    For example, if you want to use Apple’s CoreCrypto for the iOS part of your Kotlin app,
-    `iosMain` would be the right folder for such calls.
+A Kotlin Multiplatform project that demonstrates OpenTelemetry integration on both Android and iOS platforms, using the Disney API for data.
 
-* `/iosApp` contains iOS applications. Even if you’re sharing your UI with Compose Multiplatform, 
-  you need this entry point for your iOS app. This is also where you should add SwiftUI code for your project.
+## Features
 
+- Display a grid of Disney characters with images and names
+- Distributed tracing and metrics using OpenTelemetry
+- Cross-platform implementation (Android and iOS)
+- Network monitoring with OpenTelemetry spans
 
-Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html)…
+## Technologies
 
+- **Kotlin Multiplatform**: Shared code between Android and iOS
+- **Compose Multiplatform**: UI framework for cross-platform development
+- **Ktor**: HTTP client for API requests
+- **Koin**: Dependency injection
+- **OpenTelemetry**: Distributed tracing and metrics
+- **Coil**: Image loading
+- **Cocoapods**: iOS dependency management
 
-* `Demo` Working of the app with cocoapod directry
-https://github.com/user-attachments/assets/295d2e82-ae21-49d0-9bf7-86fe67bed5d2
+## Project Structure
 
+* `/composeApp`: Shared code for Compose Multiplatform applications
+  - `commonMain`: Common code for all platforms
+  - `androidMain`: Android-specific implementations
+  - `iosMain`: iOS-specific implementations
+
+* `/iosApp`: iOS application entry point with Cocoapods integration
+  - Contains OpenTelemetry Swift SDK integration
+
+## Setup
+
+1. Clone the repository
+2. Create a `local.properties` file with your SDK path
+3. Create a `secrets.gradle.kts` file with the following content:
+   ```kotlin
+   extra["httpEndpoint"] = "YOUR_OPENTELEMETRY_ENDPOINT"
+   extra["authorization"] = "YOUR_AUTHORIZATION_KEY"
+   ```
+4. Build the project using Gradle
+
+## Learn More
+
+- [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html)
+- [OpenTelemetry](https://opentelemetry.io/)
+- [Disney API](https://disneyapi.dev/)
