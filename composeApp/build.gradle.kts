@@ -64,6 +64,9 @@ kotlin {
             moduleName = "StdoutExporter"
             extraOpts += listOf("-compiler-option", "-fmodules")
         }
+        pod("Wormholy") {
+            extraOpts += listOf("-compiler-option", "-fmodules")
+        }
     }
 
     sourceSets {
@@ -107,6 +110,8 @@ kotlin {
             implementation(libs.kermit)
             implementation(libs.androidx.navigation.compose)
             implementation(libs.coil.compose)
+            implementation(libs.coil.network.ktor2)
+            implementation(libs.coil.network.ktor3)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

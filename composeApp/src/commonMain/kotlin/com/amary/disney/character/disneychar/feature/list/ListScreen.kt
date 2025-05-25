@@ -24,9 +24,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import co.touchlab.kermit.Logger
 import coil3.compose.AsyncImage
 import com.amary.disney.character.disneychar.data.api.model.Character
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -96,7 +98,11 @@ fun CharacterItem(character: Character) {
                 AsyncImage(
                     modifier = Modifier.fillMaxSize(),
                     model = character.imageUrl,
+                    contentScale = ContentScale.Crop,
                     contentDescription = null,
+                    onState = {
+                        Logger.d { "Image Status: $it" }
+                    }
                 )
             }
 

@@ -14,6 +14,7 @@ Pod::Spec.new do |spec|
     spec.dependency 'OpenTelemetry-Swift-Protocol-Exporter-Http'
     spec.dependency 'OpenTelemetry-Swift-Sdk'
     spec.dependency 'OpenTelemetry-Swift-StdoutExporter'
+    spec.dependency 'Wormholy'
                 
     if !Dir.exist?('build/cocoapods/framework/composeApp.framework') || Dir.empty?('build/cocoapods/framework/composeApp.framework')
         raise "

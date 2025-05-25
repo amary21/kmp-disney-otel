@@ -10,7 +10,7 @@ androidx-core = "1.16.0"
 androidx-espresso = "3.6.1"
 androidx-lifecycle = "2.9.0"
 androidx-testExt = "1.2.1"
-coilCompose = "3.1.0"
+coil = "3.2.0"
 composeMultiplatform = "1.8.1"
 junit = "4.13.2"
 kermit = "2.0.4"
@@ -23,6 +23,8 @@ opentelemetry-bom = "1.49.0"
 opentelemetry-semconv = "1.32.0-alpha"
 
 [libraries]
+coil-network-ktor2 = { module = "io.coil-kt.coil3:coil-network-ktor2", version.ref = "coil" }
+coil-network-ktor3 = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref = "coil" }
 opentelemetry-bom = { group = "io.opentelemetry", name = "opentelemetry-bom", version.ref = "opentelemetry-bom" }
 opentelemetry-api = { group = "io.opentelemetry", name = "opentelemetry-api" }
 opentelemetry-context = { group = "io.opentelemetry", name = "opentelemetry-context" }
@@ -34,7 +36,7 @@ opentelemetry-semconv = { group = "io.opentelemetry.semconv", name = "openteleme
 opentelemetry-semconv-incubating = { group = "io.opentelemetry.semconv", name = "opentelemetry-semconv-incubating", version.ref = "opentelemetry-semconv" }
 
 
-coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coilCompose" }
+coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil" }
 kermit = { module = "co.touchlab:kermit", version.ref = "kermit" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-testJunit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }

@@ -34,7 +34,7 @@ expect fun getHostName(): String
 fun disneyModule(openTelemetryService: OpenTelemetryService) = module {
     // Initialize OpenTelemetry service
     openTelemetryService.build(
-        httpEndpoint = "https://otlp.hinha.web.id",
+        httpEndpoint = "https://otlp.hinha.web.id/v1/traces",
         authorization = "$2a$04\$MslvP7qnyS8DThjgAYoexOs8.SP5/9TJ19ywVCk.1sXHjJUajEmG.",
         serviceName = "disney-character",
         hostName = getHostName()
@@ -96,7 +96,7 @@ private fun interceptorPlugin(
     onRequest { request, _ ->
         val networkQualifier = request.url.host + request.url.encodedPath
         openTelemetryService.createSpan(
-            spanName = "Network Request",
+            spanName = "network-request",
             eventName = "Request to $networkQualifier",
             attributes = mapOf("url" to request.url.toString())
         )
@@ -105,7 +105,7 @@ private fun interceptorPlugin(
     onResponse {
         val networkQualifier = it.request.url.host + it.request.url.encodedPath
         openTelemetryService.createSpan(
-            spanName = "Network Response",
+            spanName = "network-response",
             eventName = "Response from $networkQualifier",
             attributes = mapOf(
                 "status" to it.status.value.toString(),
