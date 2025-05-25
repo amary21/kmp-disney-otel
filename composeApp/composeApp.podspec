@@ -9,8 +9,9 @@ Pod::Spec.new do |spec|
     spec.vendored_frameworks      = 'build/cocoapods/framework/composeApp.framework'
     spec.libraries                = 'c++'
     spec.ios.deployment_target    = '15.3'
-    spec.dependency 'OpenTelemetry-Swift-Api'
-    spec.dependency 'OpenTelemetry-Swift-Sdk'
+    spec.dependency 'FormatterKit', '1.9.0'
+    spec.dependency 'PhoneNumberKit', '4.0.1'
+    spec.dependency 'libPhoneNumber-iOS', '1.2.0'
                 
     if !Dir.exist?('build/cocoapods/framework/composeApp.framework') || Dir.empty?('build/cocoapods/framework/composeApp.framework')
         raise "

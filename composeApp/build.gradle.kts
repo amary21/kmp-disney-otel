@@ -4,10 +4,11 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.kotlinserialization)
-    alias(libs.plugins.kotlinCocoapods)
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.kotlinCocoapods)
+    alias(libs.plugins.swiftKLib)
 }
 
 kotlin {
@@ -24,7 +25,7 @@ kotlin {
         iosSimulatorArm64()
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
-            baseName = "ComposeApp"
+            baseName = "composeApp"
             isStatic = true
         }
     }
@@ -34,26 +35,27 @@ kotlin {
         summary = "Demo of OpenTelemetry on Kotlin Multiplatform with Grafana, using https://disneyapi.dev for distributed tracing and metrics."
         version = "1.0"
         ios.deploymentTarget = "15.3"
+        podfile = project.file("../iosApp/Podfile")
 
         framework {
             baseName = "composeApp"
+            compilerOptions.optIn.add("-Xbinary=bundleId=com.compose.cocoapod_sample")
             isStatic = true
         }
 
-        pod("OpenTelemetry-Swift-Sdk") {
-            source = git("https://github.com/open-telemetry/opentelemetry-swift") {
-                tag = "1.11.0"
-            }
+        pod("PhoneNumberKit") {
+            version = "4.0.1"
             extraOpts += listOf("-compiler-option", "-fmodules")
-            moduleName = "OpenTelemetrySdk"
         }
 
-        pod("OpenTelemetry-Swift-Api") {
-            source = git("https://github.com/open-telemetry/opentelemetry-swift") {
-                tag = "1.11.0"
-            }
+        pod("libPhoneNumber-iOS") {
+            version = "1.2.0"
             extraOpts += listOf("-compiler-option", "-fmodules")
-            moduleName = "OpenTelemetryApi"
+        }
+
+        pod("FormatterKit") {
+            version = "1.9.0"
+            extraOpts += listOf("-compiler-option", "-fmodules")
         }
     }
 
@@ -104,11 +106,11 @@ kotlin {
 }
 
 android {
-    namespace = "com.amary.disney.character.disneychar"
+    namespace = "com.compose.cocoapod_sample"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
-        applicationId = "com.amary.disney.character.disneychar"
+        applicationId = "com.compose.cocoapod_sample"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 1
