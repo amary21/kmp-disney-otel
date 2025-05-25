@@ -1,4 +1,4 @@
-rootProject.name = "CocoapodSample"
+rootProject.name = "DisneyChar"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 pluginManagement {

@@ -39,7 +39,7 @@ kotlin {
 
         framework {
             baseName = "composeApp"
-            compilerOptions.optIn.add("-Xbinary=bundleId=com.compose.cocoapod_sample")
+            compilerOptions.optIn.add("-Xbinary=bundleId=com.amary.disney.character.disneychar")
             isStatic = true
         }
 
@@ -106,11 +106,11 @@ kotlin {
 }
 
 android {
-    namespace = "com.compose.cocoapod_sample"
+    namespace = "com.amary.disney.character.disneychar"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
-        applicationId = "com.compose.cocoapod_sample"
+        applicationId = "com.amary.disney.character.disneychar"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 1
