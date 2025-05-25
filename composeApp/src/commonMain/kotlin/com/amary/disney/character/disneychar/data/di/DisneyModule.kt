@@ -1,5 +1,6 @@
 package com.amary.disney.character.disneychar.data.di
 
+import com.amary.disney.character.disneychar.BuildKonfig
 import com.amary.disney.character.disneychar.data.api.otel.OpenTelemetryService
 import com.amary.disney.character.disneychar.data.api.repository.DisneyRepository
 import com.amary.disney.character.disneychar.data.implementation.remote.api.DisneyApi
@@ -34,8 +35,8 @@ expect fun getHostName(): String
 fun disneyModule(openTelemetryService: OpenTelemetryService) = module {
     // Initialize OpenTelemetry service
     openTelemetryService.build(
-        httpEndpoint = "https://otlp.hinha.web.id/v1/traces",
-        authorization = "$2a$04\$MslvP7qnyS8DThjgAYoexOs8.SP5/9TJ19ywVCk.1sXHjJUajEmG.",
+        httpEndpoint = BuildKonfig.HTTP_ENDPOINT,
+        authorization = BuildKonfig.AUTHORIZATION,
         serviceName = "disney-character",
         hostName = getHostName()
     )

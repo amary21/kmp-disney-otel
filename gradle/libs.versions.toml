@@ -21,6 +21,7 @@ navigation-compose = "2.9.0-beta01"
 swiftkLib = "0.6.4"
 opentelemetry-bom = "1.49.0"
 opentelemetry-semconv = "1.32.0-alpha"
+buildkonfig = "0.17.1"
 
 [libraries]
 coil-network-ktor2 = { module = "io.coil-kt.coil3:coil-network-ktor2", version.ref = "coil" }
@@ -71,3 +72,4 @@ kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref =
 kotlinserialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 kotlinCocoapods = { id = "org.jetbrains.kotlin.native.cocoapods", version.ref = "kotlin" }
 swiftKLib = { id = "io.github.ttypic.swiftklib", version.ref = "swiftkLib" }
+buildkonfig = { id = "com.codingfeline.buildkonfig", version.ref = "buildkonfig" }

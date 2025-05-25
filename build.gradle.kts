@@ -8,4 +8,5 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform) apply false
     alias(libs.plugins.kotlinserialization) apply false
     alias(libs.plugins.kotlinCocoapods) apply false
+    alias(libs.plugins.buildkonfig) apply false
 }

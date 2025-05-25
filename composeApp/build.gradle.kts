@@ -1,5 +1,6 @@
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -9,6 +10,17 @@ plugins {
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.kotlinCocoapods)
     alias(libs.plugins.swiftKLib)
+    alias(libs.plugins.buildkonfig)
+}
+
+apply(from = "../secrets.gradle.kts")
+
+buildkonfig {
+    packageName = "com.amary.disney.character.disneychar"
+    defaultConfigs {
+        buildConfigField(STRING, "HTTP_ENDPOINT", extra["httpEndpoint"].toString())
+        buildConfigField(STRING, "AUTHORIZATION", extra["authorization"].toString())
+    }
 }
 
 kotlin {
