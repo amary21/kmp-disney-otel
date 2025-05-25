@@ -67,7 +67,15 @@ kotlin {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.ktor.client.okhttp)
-            implementation(libs.android.agent)
+            implementation(project.dependencies.platform(libs.opentelemetry.bom))
+            implementation(libs.opentelemetry.api)
+            implementation(libs.opentelemetry.context)
+            implementation(libs.opentelemetry.exporter.otlp)
+            implementation(libs.opentelemetry.exporter.logging)
+            implementation(libs.opentelemetry.extension.kotlin)
+            implementation(libs.opentelemetry.sdk)
+            implementation(libs.opentelemetry.semconv)
+            implementation(libs.opentelemetry.semconv.incubating)
         }
 
         iosMain.dependencies {
