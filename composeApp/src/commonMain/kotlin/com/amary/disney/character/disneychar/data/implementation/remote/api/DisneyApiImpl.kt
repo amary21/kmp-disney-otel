@@ -1,6 +1,5 @@
 package com.amary.disney.character.disneychar.data.implementation.remote.api
 
-import com.amary.disney.character.disneychar.data.implementation.remote.response.CharacterResponse
 import com.amary.disney.character.disneychar.data.implementation.remote.response.InfoResponse
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body

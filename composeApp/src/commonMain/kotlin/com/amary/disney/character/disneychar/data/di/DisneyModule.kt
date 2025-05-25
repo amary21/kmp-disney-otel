@@ -6,6 +6,7 @@ import com.amary.disney.character.disneychar.data.implementation.remote.api.Disn
 import com.amary.disney.character.disneychar.data.implementation.remote.api.DisneyApiImpl
 import com.amary.disney.character.disneychar.data.implementation.repository.DisneyRepositoryImpl
 import io.ktor.client.HttpClient
+import io.ktor.client.call.body
 import io.ktor.client.engine.HttpClientEngine
 import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.defaultRequest
@@ -21,6 +22,9 @@ import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import kotlinx.coroutines.IO
 import kotlinx.serialization.json.Json
 import co.touchlab.kermit.Logger as KermitLogger
+import io.ktor.client.plugins.api.createClientPlugin
+import io.ktor.client.statement.request
+import io.ktor.http.encodedPath
 
 
 expect fun httpClientEngine(): HttpClientEngine
@@ -28,16 +32,17 @@ expect fun httpClientEngine(): HttpClientEngine
 expect fun getHostName(): String
 
 fun disneyModule(openTelemetryService: OpenTelemetryService) = module {
-    single<OpenTelemetryService> {
-        openTelemetryService.build(
-            httpEndpoint = "https://otlp.hinha.web.id",
-            authorization = "$2a$04\$MslvP7qnyS8DThjgAYoexOs8.SP5/9TJ19ywVCk.1sXHjJUajEmG.",
-            serviceName = "disney-character",
-            hostName = getHostName()
-        )
-        openTelemetryService.trace("disney-app-mobile", "1.0.0")
-        openTelemetryService
-    }
+    // Initialize OpenTelemetry service
+    openTelemetryService.build(
+        httpEndpoint = "https://otlp.hinha.web.id",
+        authorization = "$2a$04\$MslvP7qnyS8DThjgAYoexOs8.SP5/9TJ19ywVCk.1sXHjJUajEmG.",
+        serviceName = "disney-character",
+        hostName = getHostName()
+    )
+    openTelemetryService.trace("disney-app-mobile", "1.0.0")
+
+    // Register the already initialized service
+    single<OpenTelemetryService> { openTelemetryService }
     single<HttpClient> {
         HttpClient(httpClientEngine()) {
             expectSuccess = true
@@ -61,6 +66,7 @@ fun disneyModule(openTelemetryService: OpenTelemetryService) = module {
                     explicitNulls = false
                 })
             }
+            install(interceptorPlugin(get()))
             defaultRequest {
                 url("https://api.disneyapi.dev/")
                 contentType(ContentType.Application.Json)
@@ -81,5 +87,30 @@ fun disneyModule(openTelemetryService: OpenTelemetryService) = module {
             disneyApi = get<DisneyApi>(),
             ioDispatcher = Dispatchers.IO
         ) 
+    }
+}
+
+private fun interceptorPlugin(
+    openTelemetryService: OpenTelemetryService
+) = createClientPlugin("CustomInterceptors") {
+    onRequest { request, _ ->
+        val networkQualifier = request.url.host + request.url.encodedPath
+        openTelemetryService.createSpan(
+            spanName = "Network Request",
+            eventName = "Request to $networkQualifier",
+            attributes = mapOf("url" to request.url.toString())
+        )
+        request.headers.append("X-Request-ID", networkQualifier)
+    }
+    onResponse {
+        val networkQualifier = it.request.url.host + it.request.url.encodedPath
+        openTelemetryService.createSpan(
+            spanName = "Network Response",
+            eventName = "Response from $networkQualifier",
+            attributes = mapOf(
+                "status" to it.status.value.toString(),
+                "data" to it.body<String>()
+            )
+        )
     }
 }

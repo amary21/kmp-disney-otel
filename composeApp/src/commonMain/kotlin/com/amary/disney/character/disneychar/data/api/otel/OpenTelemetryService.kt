@@ -12,4 +12,9 @@ interface OpenTelemetryService {
         instrumentationName: String,
         instrumentationVersion: String
     )
+    fun createSpan(
+        spanName: String,
+        eventName: String = "",
+        attributes: Map<String, String> = emptyMap(),
+    )
 }

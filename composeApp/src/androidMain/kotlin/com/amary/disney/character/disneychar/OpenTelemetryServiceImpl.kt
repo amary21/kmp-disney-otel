@@ -22,8 +22,6 @@ class OpenTelemetryServiceImpl: OpenTelemetryService {
     private var tracer: Tracer? = null
 
     override fun build(httpEndpoint: String, authorization: String, serviceName: String, hostName: String) {
-        Log.e("build", "HELLO WORLD")
-
         val otelResource = Resource.getDefault().merge(
             Resource.create(
                 Attributes.of(
@@ -51,27 +49,44 @@ class OpenTelemetryServiceImpl: OpenTelemetryService {
     }
 
     override fun trace(instrumentationName: String, instrumentationVersion: String) {
+        if (openTelemetrySdk == null) {
+            Log.e("trace", "OpenTelemetry SDK is not initialized. Call build() first.")
+            return
+        }
+
         tracer = openTelemetrySdk?.getTracer(
             instrumentationName,
             instrumentationVersion
         )
 
-        Log.e("trace", tracer.toString())
+        Log.e("trace", "Tracer initialized: ${tracer != null}")
+    }
 
-        val span = tracer?.spanBuilder("First Fragment Button onClick")?.startSpan()
+    override fun createSpan(
+        spanName: String,
+        eventName: String,
+        attributes: Map<String, String>
+    ) {
+        if (tracer == null) {
+            Log.e("createSpan", "Tracer is not initialized. Call trace() first.")
+            return
+        }
+        val span = tracer?.spanBuilder(spanName)?.startSpan()
         try {
             span?.makeCurrent().use { scope ->
-                // Obtain the trace ID.
-                Log.e("trace", span?.spanContext?.traceId.toString())
-                println(span?.spanContext?.traceId)
-                // Obtain the span ID.
-
-                Log.e("trace", span?.spanContext?.spanId.toString())
-                println(span?.spanContext?.spanId)
+                // Log span and trace IDs for debugging
+                Log.d("createSpan", "Trace ID: ${span?.spanContext?.traceId}")
+                Log.d("createSpan", "Span ID: ${span?.spanContext?.spanId}")
             }
+
+            attributes.forEach { (key, value) ->
+                span?.setAttribute(key, value)
+            }
+
+            span?.addEvent(eventName)
         } catch (t: Throwable) {
-            span?.setStatus(StatusCode.ERROR, "Something wrong in onClick")
-            Log.e("trace", "Error in onClick", t)
+            span?.setStatus(StatusCode.ERROR, "Error in span: ${t.message}")
+            Log.e("createSpan", "Error in span: ${spanName}", t)
         } finally {
             span?.end()
         }

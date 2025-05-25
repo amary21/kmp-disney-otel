@@ -13,7 +13,6 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
-        Log.e("onCreate", "HELLO FROM ANDROID")
         setContent {
             App(OpenTelemetryServiceImpl())
         }
@@ -26,5 +25,10 @@ fun AppAndroidPreview() {
     App(object: OpenTelemetryService{
         override fun build(httpEndpoint: String, authorization: String, serviceName: String, hostName: String) {}
         override fun trace(instrumentationName: String, instrumentationVersion: String) {}
+        override fun createSpan(
+            spanName: String,
+            eventName: String,
+            attributes: Map<String, String>
+        ) {}
     })
 }
