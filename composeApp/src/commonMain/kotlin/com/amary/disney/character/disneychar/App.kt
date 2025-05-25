@@ -4,6 +4,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
+import com.amary.disney.character.disneychar.data.api.otel.OpenTelemetryService
 import com.amary.disney.character.disneychar.data.di.disneyModule
 import com.amary.disney.character.disneychar.feature.list.ListRoute
 import com.amary.disney.character.disneychar.feature.list.ListViewModel
@@ -15,11 +16,11 @@ import org.koin.dsl.module
 
 @Composable
 @Preview
-fun App() {
+fun App(openTelemetryService: OpenTelemetryService) {
     KoinApplication(
         application = {
             modules(
-                disneyModule +
+                disneyModule(openTelemetryService) +
                 module {
                     viewModel { ListViewModel(get()) }
                 }

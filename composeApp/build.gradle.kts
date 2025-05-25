@@ -52,6 +52,10 @@ kotlin {
             moduleName = "OpenTelemetryApi"
             extraOpts += listOf("-compiler-option", "-fmodules")
         }
+        pod("OpenTelemetry-Swift-Protocol-Exporter-Common") {
+            moduleName = "OpenTelemetryProtocolExporterCommon"
+            extraOpts += listOf("-compiler-option", "-fmodules")
+        }
         pod("OpenTelemetry-Swift-Protocol-Exporter-Http") {
             moduleName = "OpenTelemetryProtocolExporterHttp"
             extraOpts += listOf("-compiler-option", "-fmodules")

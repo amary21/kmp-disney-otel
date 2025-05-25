@@ -1,5 +1,6 @@
 package com.amary.disney.character.disneychar.data.di
 
+import com.amary.disney.character.disneychar.data.api.otel.OpenTelemetryService
 import com.amary.disney.character.disneychar.data.api.repository.DisneyRepository
 import com.amary.disney.character.disneychar.data.implementation.remote.api.DisneyApi
 import com.amary.disney.character.disneychar.data.implementation.remote.api.DisneyApiImpl
@@ -24,7 +25,19 @@ import co.touchlab.kermit.Logger as KermitLogger
 
 expect fun httpClientEngine(): HttpClientEngine
 
-val disneyModule = module {
+expect fun getHostName(): String
+
+fun disneyModule(openTelemetryService: OpenTelemetryService) = module {
+    single<OpenTelemetryService> {
+        openTelemetryService.build(
+            httpEndpoint = "https://otlp.hinha.web.id",
+            authorization = "$2a$04\$MslvP7qnyS8DThjgAYoexOs8.SP5/9TJ19ywVCk.1sXHjJUajEmG.",
+            serviceName = "disney-character",
+            hostName = getHostName()
+        )
+        openTelemetryService.trace("disney-app-mobile", "1.0.0")
+        openTelemetryService
+    }
     single<HttpClient> {
         HttpClient(httpClientEngine()) {
             expectSuccess = true

@@ -6,7 +6,9 @@ import Foundation
 struct ComposeView: UIViewControllerRepresentable {
 
     func makeUIViewController(context: Context) -> UIViewController {
-        MainViewControllerKt.MainViewController()
+        MainViewControllerKt.MainViewController(
+            openTelemetryService: OpenTelemetryServiceImpl()
+        )
     }
 
     func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}

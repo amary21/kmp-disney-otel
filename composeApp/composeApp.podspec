@@ -10,6 +10,7 @@ Pod::Spec.new do |spec|
     spec.libraries                = 'c++'
     spec.ios.deployment_target    = '15.3'
     spec.dependency 'OpenTelemetry-Swift-Api'
+    spec.dependency 'OpenTelemetry-Swift-Protocol-Exporter-Common'
     spec.dependency 'OpenTelemetry-Swift-Protocol-Exporter-Http'
     spec.dependency 'OpenTelemetry-Swift-Sdk'
     spec.dependency 'OpenTelemetry-Swift-StdoutExporter'

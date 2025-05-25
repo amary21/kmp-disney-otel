@@ -1,18 +1,24 @@
-import Foundation
+import composeApp
 import OpenTelemetryProtocolExporterHttp
+import OpenTelemetryProtocolExporterCommon
+import Foundation
 import OpenTelemetryApi
 import OpenTelemetrySdk
 import StdoutExporter
 
-@objc public class OpenTelemetryUtil: NSObject {
+class OpenTelemetryServiceImpl: OpenTelemetryService {
 
-    @objc public static func initBuild(
-        httpEndpoint: String,
-        serviceName: String,
-        hostName: String
-    ) {
+    private var tracer: Tracer? = nil
+    
+    func build(httpEndpoint: String, authorization: String, serviceName: String, hostName: String) {
         let url = URL(string: httpEndpoint)
-        let otlpHttpTraceExporter = OtlpHttpTraceExporter(endpoint: url!)
+        let config = OtlpConfiguration(
+            headers: [("Authorization", authorization)]
+        )
+        let otlpHttpTraceExporter = OtlpHttpTraceExporter(
+            endpoint: url!,
+            config: config
+        )
         let resource = Resource(attributes: [
             ResourceAttributes.serviceName.rawValue: AttributeValue.string(serviceName),
             ResourceAttributes.hostName.rawValue: AttributeValue.string(hostName)
@@ -27,11 +33,10 @@ import StdoutExporter
         )
     }
     
-    @objc public static func getTracer(instrumentationName: String, instrumentationVersion: String) -> Any {
-        return OpenTelemetry.instance.tracerProvider.get(
+    func trace(instrumentationName: String, instrumentationVersion: String) {
+        tracer = OpenTelemetry.instance.tracerProvider.get(
             instrumentationName: instrumentationName,
             instrumentationVersion: instrumentationVersion
         )
     }
-
 }
